@@ -21,23 +21,31 @@ steps:
         - pull_request
         - push
   - name: docker build
-    image: docker
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+    image: ubuntu
     commands:
+      - apt-get update -y
+      - apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+      - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      - echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      - apt-get install docker-ce docker-ce-cli containerd.io -y
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - nvm install 12
       - docker build -t henrique/$(npm run version --silent) .
     when:
       event:
         - pull_request
         - push
   - name: docker push
-    image: docker
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+    image: ubuntu
     commands:
-      - docker push henrique/$(npm run version --silent) .
+      - apt-get update -y
+      - apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+      - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      - echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      - apt-get install docker-ce docker-ce-cli containerd.io -y
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - nvm install 12
+      - docker build -t henrique/$(npm run version --silent) .
     when:
       event:
         - pull_request
