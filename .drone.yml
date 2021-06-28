@@ -1,5 +1,7 @@
+---
 kind: pipeline
-name: eks_cluster_fargate_terraform
+type: docker
+name: api_conversao
 
 steps:
   - name: npm install
