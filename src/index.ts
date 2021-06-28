@@ -1,15 +1,15 @@
 const express = require('express');
 const os = require('os')
 const app = express();
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
+import * as swaggerUi from 'swagger-ui-express'
+import * as YAML from 'yamljs'
 const swaggerDocument = YAML.load('./swagger.yaml');
-const config = require('./config/system-life');
-const NodeHog = require('nodehog');
+// const config = require('./config/system-life');
+import * as NodeHog from 'nodehog'
 
-app.use(config.middlewares.healthMid);
-app.use('/', config.routers);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); 
+// app.use(config.middlewares.healthMid);
+// app.use('/', config.routers);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/fahrenheit/:valor/celsius', (req, res) => {
 
@@ -49,6 +49,6 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
     res.send("OK");
 });
 
-app.listen(8080, () => {
+app.listen(9999, () => {
     console.log("Servidor rodando na porta 8080");
 });

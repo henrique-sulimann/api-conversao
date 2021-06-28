@@ -1,0 +1,20 @@
+kind: pipeline
+name: eks_cluster_fargate_terraform
+
+steps:
+  - name: npm install
+    image: node:14.16.1-alpine3.13
+    commands:
+      - npm install
+    when:
+      event:
+        - pull_request
+        - push
+  - name: npm run build
+    image: node:14.16.1-alpine3.13
+    commands:
+      - npm run build
+    when:
+      event:
+        - pull_request
+        - push
