@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: eks_cluster_fargate_terraform
+name: api-conversao
 
 steps:
   - name: npm install
@@ -28,25 +28,25 @@ steps:
       event:
         - pull_request
         - push
-  # - name: docker build
-  #   image: docker
-  #   volumes:
-  #     - name: dockersock
-  #       path: /var/run/docker.sock
-  #   commands:
-  #     - docker build -t henrique/$(npm run version --silent) .
-  #   when:
-  #     event:
-  #       - pull_request
-  #       - push
-  # - name: docker push
-  #   image: docker
-  #   volumes:
-  #     - name: dockersock
-  #       path: /var/run/docker.sock
-  #   commands:
-  #     - docker push henrique/$(npm run version --silent) .
-  #   when:
-  #     event:
-  #       - pull_request
-  #       - push
+  - name: docker build
+    image: docker
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - docker build -t henrique/$(npm run version --silent) .
+    when:
+      event:
+        - pull_request
+        - push
+  - name: docker push
+    image: docker
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - docker push henrique/$(npm run version --silent) .
+    when:
+      event:
+        - pull_request
+        - push
