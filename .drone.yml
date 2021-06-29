@@ -46,6 +46,7 @@ steps:
       event:
         - pull_request
         - push
+
 volumes:
   - name: dockersock
     host:
