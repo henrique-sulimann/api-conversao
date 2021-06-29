@@ -2,10 +2,16 @@
 kind: pipeline
 type: docker
 name: api-conversao
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
 volumes:
-  - name: docker-certs
-    temp: {}
-  - name: docker-certs-client
+  - name: dockersock
     temp: {}
 
 steps:
@@ -28,17 +34,14 @@ steps:
   - name: docker build
     image: docker:latest
     volumes:
-      - name: docker-certs
-        path: /certs/ca
-      - name: docker-certs-client
-        path: /certs/client
+      - name: dockersock
+        path: /var/run
     environment:
       DOCKER_TLS_CERTDIR: /certs
     commands:
-      # - apk update
-      # - apk add --update nodejs nodejs-npm
-      # - docker build -t henrique/$(npm run version --silent) .
-      - docker ps
+      - apk update
+      - apk add --update nodejs nodejs-npm
+      - docker build -t henrique/$(npm run version --silent) .
     when:
       event:
         - pull_request
