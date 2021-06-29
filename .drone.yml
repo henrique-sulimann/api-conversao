@@ -36,7 +36,7 @@ steps:
         - pull_request
         - push
   - name: docker push
-    image: docker:latest
+    image: docker:dind
     privileged: true
     volumes:
       - name: dockersock
