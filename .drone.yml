@@ -32,7 +32,7 @@ steps:
         - pull_request
         - push
   - name: docker build
-    image: docker:latest
+    image: docker:dind
     volumes:
       - name: dockersock
         path: /var/run
