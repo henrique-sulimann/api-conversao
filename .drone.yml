@@ -43,20 +43,20 @@ steps:
       event:
         - pull_request
         - push
-  - name: docker push
-    image: docker:dind
-    volumes:
-      - name: docker-certs
-        path: /certs/ca
-      - name: docker-certs-client
-        path: /certs/client
-    environment:
-      DOCKER_TLS_CERTDIR: /certs
-    commands:
-      - apk update
-      - apk add --update nodejs nodejs-npm
-      - docker push henrique/$(npm run version --silent)
-    when:
-      event:
-        - pull_request
-        - push
+  # - name: docker push
+  #   image: docker:dind
+  #   volumes:
+  #     - name: docker-certs
+  #       path: /certs/ca
+  #     - name: docker-certs-client
+  #       path: /certs/client
+  #   environment:
+  #     DOCKER_TLS_CERTDIR: /certs
+  #   commands:
+  #     - apk update
+  #     - apk add --update nodejs nodejs-npm
+  #     - docker push henrique/$(npm run version --silent)
+  #   when:
+  #     event:
+  #       - pull_request
+  #       - push
