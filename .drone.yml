@@ -21,13 +21,12 @@ steps:
     image: node:14.16.1-alpine3.13
     commands:
       - npm run build
-      - docker ps
     when:
       event:
         - pull_request
         - push
   - name: docker build
-    image: docker:dind
+    image: docker:latest
     volumes:
       - name: docker-certs
         path: /certs/ca
@@ -36,15 +35,16 @@ steps:
     environment:
       DOCKER_TLS_CERTDIR: /certs
     commands:
-      - apk update
-      - apk add --update nodejs nodejs-npm
-      - docker build -t henrique/$(npm run version --silent) .
+      # - apk update
+      # - apk add --update nodejs nodejs-npm
+      # - docker build -t henrique/$(npm run version --silent) .
+      - docker ps
     when:
       event:
         - pull_request
         - push
   # - name: docker push
-  #   image: docker:dind
+  #   image: docker:latest
   #   volumes:
   #     - name: docker-certs
   #       path: /certs/ca
