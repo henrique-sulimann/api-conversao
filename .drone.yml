@@ -23,8 +23,12 @@ steps:
   - name: docker build
     image: docker:dind
     volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+      - name: docker-certs
+        path: /certs/ca
+      - name: docker-certs-client
+        path: /certs/client
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
     commands:
       - apk update
       - apk add --update nodejs nodejs-npm
@@ -36,8 +40,12 @@ steps:
   - name: docker push
     image: docker:dind
     volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+      - name: docker-certs
+        path: /certs/ca
+      - name: docker-certs-client
+        path: /certs/client
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
     commands:
       - apk update
       - apk add --update nodejs nodejs-npm
