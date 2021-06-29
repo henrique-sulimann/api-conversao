@@ -26,7 +26,7 @@ steps:
       - name: dockersock
         path: /var/run/docker.sock
     commands:
-      - apk update -y
+      - apk update
       - apk add --update nodejs nodejs-npm
       - docker build -t henrique/$(npm run version --silent) .
     when:
@@ -39,7 +39,7 @@ steps:
       - name: dockersock
         path: /var/run/docker.sock
     commands:
-      - apk update -y
+      - apk update
       - apk add --update nodejs nodejs-npm
       - docker push henrique/$(npm run version --silent)
     when:
