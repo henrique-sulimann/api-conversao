@@ -22,7 +22,7 @@ steps:
         - push
   - name: docker build
     image: docker:dind
-    # privileged: true
+    privileged: true
     volumes:
       - name: dockersock
         path: /var/run
@@ -37,7 +37,7 @@ steps:
         - push
   - name: docker push
     image: docker:dind
-    # privileged: true
+    privileged: true
     volumes:
       - name: dockersock
         path: /var/run
