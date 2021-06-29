@@ -2,17 +2,6 @@
 kind: pipeline
 type: docker
 name: api-conversao
-services:
-  - name: docker
-    image: docker:dind
-    privileged: true
-    volumes:
-      - name: dockersock
-        path: /var/run
-
-volumes:
-  - name: dockersock
-    temp: {}
 
 steps:
   - name: npm install
@@ -36,9 +25,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    environment:
-      DOCKER_TLS_CERTDIR: /certs
     commands:
+      - sleep 5
       - apk update
       - apk add --update nodejs nodejs-npm
       - docker build -t henrique/$(npm run version --silent) .
@@ -46,6 +34,17 @@ steps:
       event:
         - pull_request
         - push
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
   # - name: docker push
   #   image: docker:latest
   #   volumes:
