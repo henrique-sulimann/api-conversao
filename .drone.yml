@@ -20,7 +20,7 @@ steps:
       event:
         - pull_request
         - push
-  - name: docker push
+  - name: docker build
     image: docker
     volumes:
       - name: dockersock
