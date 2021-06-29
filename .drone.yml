@@ -21,7 +21,7 @@ steps:
         - pull_request
         - push
   - name: docker build
-    image: docker
+    image: docker:dind
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
@@ -34,7 +34,7 @@ steps:
         - pull_request
         - push
   - name: docker push
-    image: docker
+    image: docker:dind
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
@@ -46,3 +46,7 @@ steps:
       event:
         - pull_request
         - push
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
