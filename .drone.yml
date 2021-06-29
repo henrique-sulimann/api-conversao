@@ -27,7 +27,7 @@ steps:
       - name: dockersock
         path: /var/run
     commands:
-      - sleep 5
+      - sleep 6
       - apk update
       - apk add --update nodejs nodejs-npm
       - docker build -t henrique/$(npm run version --silent) .
