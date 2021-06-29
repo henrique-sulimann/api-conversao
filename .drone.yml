@@ -4,11 +4,10 @@ type: docker
 name: api-conversao
 volumes:
   - name: docker-certs
-    host:
-      path: /certs/ca
+    temp: {}
   - name: docker-certs-client
-    host:
-      path: /certs/client
+    temp: {}
+
 steps:
   - name: npm install
     image: node:14.16.1-alpine3.13
