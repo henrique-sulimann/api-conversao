@@ -26,10 +26,16 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
     commands:
       - sleep 6
       - apk update
       - apk add --update nodejs nodejs-npm
+      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - docker build -t henrique/$(npm run version --silent) .
     when:
       event:
