@@ -29,3 +29,16 @@ steps:
       password:
         from_secret: DOCKER_PASSWORD
       repo: hsulimann/api-conversao
+  - name: Get Kubeconfig
+    image: amazon/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY
+    commands:
+      - eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER
+  - name: Deploy
+    image: bitnami/kubectl:latest
+    commands:
+      - apply -f k8s/api-conversao/
