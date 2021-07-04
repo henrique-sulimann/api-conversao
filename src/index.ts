@@ -4,11 +4,11 @@ const app = express();
 import * as swaggerUi from 'swagger-ui-express'
 import * as YAML from 'yamljs'
 const swaggerDocument = YAML.load('./swagger.yaml');
-// const config = require('./config/system-life');
+const config = require('./config/system-life');
 import * as NodeHog from 'nodehog'
 
-// app.use(config.middlewares.healthMid);
-// app.use('/', config.routers);
+app.use(config.middlewares.healthMid);
+app.use('/', config.routers);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/fahrenheit/:valor/celsius', (req, res) => {

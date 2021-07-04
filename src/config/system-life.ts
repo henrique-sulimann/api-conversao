@@ -1,4 +1,4 @@
-var express = require('express');
+import * as express from 'express'
 var router = express.Router();
 
 let isHealth = true;
@@ -7,7 +7,7 @@ let isRead = () => {
     return readTime < new Date(Date.now());
 };
 
-router.get('/ready', (req, res) => {
+router.get('/ready', (_, res) => {
 
     if (isRead()) {
         res.statusCode = 200;
@@ -18,12 +18,12 @@ router.get('/ready', (req, res) => {
     }
 });
 
-router.get('/health', (req, res) => {
+router.get('/health', (_, res) => {
 
     res.send("OK");
 });
 
-router.put('/unhealth', (req, res) => {
+router.put('/unhealth', (_, res) => {
 
     isHealth = false;
     res.send("OK");
@@ -36,7 +36,7 @@ router.put('/unreadyfor/:seconds', (req, res) => {
     res.send("OK");
 });
 
-var healthMid = function (req, res, next) {
+const healthMid = function (_, res, next) {
 
     if (isHealth) {
         next();
@@ -46,5 +46,5 @@ var healthMid = function (req, res, next) {
     }
 };
 
-exports.routers = router;
-exports.middlewares = { healthMid };
+export const routers = router;
+export const middlewares = { healthMid };
