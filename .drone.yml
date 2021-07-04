@@ -29,7 +29,7 @@ steps:
         from_secret: DOCKER_PASSWORD
       repo: hsulimann/api-conversao
       auto_tag: true
-      auto_tag_suffix: linux-amd64
+      auto_tag_suffix: $(npm run version --silent)
       command:
         - apk update
         - apk add --update nodejs nodejs-npm
