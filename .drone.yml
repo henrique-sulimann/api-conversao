@@ -79,6 +79,7 @@
 # #     temp: {}
 ---
 kind: pipeline
+type: docker
 name: default
 
 steps:
