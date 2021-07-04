@@ -4,22 +4,22 @@ type: docker
 name: api-conversao
 
 steps:
-  # - name: npm install
-  #   image: node:14.16.1-alpine3.13
-  #   commands:
-  #     - npm install
-  #   when:
-  #     event:
-  #       - pull_request
-  #       - push
-  # - name: npm run build
-  #   image: node:14.16.1-alpine3.13
-  #   commands:
-  #     - npm run build
-  #   when:
-  #     event:
-  #       - pull_request
-  #       - push
+  - name: npm install
+    image: node:14.16.1-alpine3.13
+    commands:
+      - npm install
+    when:
+      event:
+        - pull_request
+        - push
+  - name: npm run build
+    image: node:14.16.1-alpine3.13
+    commands:
+      - npm run build
+    when:
+      event:
+        - pull_request
+        - push
   - name: docker build
     image: plugins/docker
     settings:
