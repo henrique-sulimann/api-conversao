@@ -3,7 +3,7 @@ const os = require('os')
 const app = express();
 import * as swaggerUi from 'swagger-ui-express'
 import * as YAML from 'yamljs'
-const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerDocument = YAML.load('../swagger.yaml');
 const config = require('./config/system-life');
 import * as NodeHog from 'nodehog'
 
