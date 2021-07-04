@@ -1,7 +1,7 @@
 ---
 kind: pipeline
-type: kubernetes
-name: api-conversao
+type: docker
+name: api
 
 steps:
   # - name: npm install
@@ -35,10 +35,10 @@ steps:
       - sleep 5
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - docker build -t henrique/$(npm run version --silent) .
-    when:
-      event:
-        - pull_request
-        - push
+    # when:
+    #   event:
+    #     - pull_request
+    #     - push
   # - name: docker push
   #   image: docker:dind
   #   # privileged: true
