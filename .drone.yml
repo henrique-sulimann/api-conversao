@@ -37,8 +37,10 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: AWS_SECRET_ACCESS_KEY
     commands:
-      - eks
+      - |
+        aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER
   - name: Deploy
     image: bitnami/kubectl:latest
     commands:
-      - kubectl apply -f k8s/api-conversao/
+      - |
+        kubectl apply -f k8s/api-conversao/
