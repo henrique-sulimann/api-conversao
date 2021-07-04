@@ -27,7 +27,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASSWORD
-      repo: henrique-sulimann/api-conversao
+      repo: hsulimann/api-conversao
     # privileged: true
     # volumes:
     #   - name: dockersock
