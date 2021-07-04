@@ -1,79 +1,104 @@
+# ---
+# kind: pipeline
+# type: docker
+# name: api-conversao
+
+# steps:
+#   - name: npm install
+#     image: node:14.16.1-alpine3.13
+#     commands:
+#       - npm install
+#     when:
+#       event:
+#         - pull_request
+#         - push
+#   - name: npm run build
+#     image: node:14.16.1-alpine3.13
+#     commands:
+#       - npm run build
+#     when:
+#       event:
+#         - pull_request
+#         - push
+#   - name: docker build
+#     image: plugins/docker
+#     settings:
+#       username:
+#         from_secret: DOCKER_USER
+#       password:
+#         from_secret: DOCKER_PASSWORD
+#       repo: hsulimann/api-conversao
+#       auto_tag: true
+#       auto_tag_suffix: $(npm run version --silent)
+#       command:
+#         - apk update
+#         - apk add --update nodejs nodejs-npm
+#     # privileged: true
+#     # volumes:
+#     #   - name: dockersock
+#     #     path: /var/run
+#     # environment:
+#     #   DOCKER_USER:
+#     #     from_secret: DOCKER_USER
+#     #   DOCKER_PASSWORD:
+#     #     from_secret: DOCKER_PASSWORD
+#     # commands:
+#     #   - sleep 5
+#     #   - apk update
+#     #   - apk add --update nodejs nodejs-npm
+#     #   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+#     #   - docker build -t henrique/$(npm run version --silent) .
+#     # when:
+#     #   event:
+#     #     - pull_request
+#     #     - push
+#   # - name: docker push
+#   #   image: docker:dind
+#   #   # privileged: true
+#   #   volumes:
+#   #     - name: dockersock
+#   #       path: /var/run
+#   #   commands:
+#   #     - sleep 5
+#   #     - apk update
+#   #     - apk add --update nodejs nodejs-npm
+#   #     - docker push henrique/$(npm run version --silent)
+#   #   when:
+#   #     event:
+#   #       - pull_request
+#   #       - push
+# # services:
+# #   - name: docker
+# #     image: docker:dind
+# #     privileged: true
+# #     volumes:
+# #       - name: dockersock
+# #         path: /var/run
+# # volumes:
+# #   - name: dockersock
+# #     temp: {}
 ---
 kind: pipeline
-type: docker
-name: api-conversao
+name: default
 
 steps:
-  - name: npm install
-    image: node:14.16.1-alpine3.13
+  - name: test
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run
     commands:
-      - npm install
-    when:
-      event:
-        - pull_request
-        - push
-  - name: npm run build
-    image: node:14.16.1-alpine3.13
-    commands:
-      - npm run build
-    when:
-      event:
-        - pull_request
-        - push
-  - name: docker build
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DOCKER_USER
-      password:
-        from_secret: DOCKER_PASSWORD
-      repo: hsulimann/api-conversao
-      auto_tag: true
-      auto_tag_suffix: $(npm run version --silent)
-      command:
-        - apk update
-        - apk add --update nodejs nodejs-npm
-    # privileged: true
-    # volumes:
-    #   - name: dockersock
-    #     path: /var/run
-    # environment:
-    #   DOCKER_USER:
-    #     from_secret: DOCKER_USER
-    #   DOCKER_PASSWORD:
-    #     from_secret: DOCKER_PASSWORD
-    # commands:
-    #   - sleep 5
-    #   - apk update
-    #   - apk add --update nodejs nodejs-npm
-    #   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    #   - docker build -t henrique/$(npm run version --silent) .
-    # when:
-    #   event:
-    #     - pull_request
-    #     - push
-  # - name: docker push
-  #   image: docker:dind
-  #   # privileged: true
-  #   volumes:
-  #     - name: dockersock
-  #       path: /var/run
-  #   commands:
-  #     - sleep 5
-  #     - apk update
-  #     - apk add --update nodejs nodejs-npm
-  #     - docker push henrique/$(npm run version --silent)
-  #   when:
-  #     event:
-  #       - pull_request
-  #       - push
-# services:
-#   - name: docker
-#     image: docker:dind
-#     privileged: true
-#     volumes:
-#       - name: dockersock
-#         path: /var/run
-# volumes:
-#   - name: dockersock
-#     temp: {}
+      - sleep 5 # give docker enough time to start
+      - docker ps -a
+
+services:
+  - name: docker
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
