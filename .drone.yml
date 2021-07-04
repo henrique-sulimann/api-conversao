@@ -41,21 +41,21 @@ steps:
       event:
         - pull_request
         - push
-  - name: docker push
-    image: docker:dind
-    # privileged: true
-    volumes:
-      - name: dockersock
-        path: /var/run
-    commands:
-      - sleep 5
-      - apk update
-      - apk add --update nodejs nodejs-npm
-      - docker push henrique/$(npm run version --silent)
-    when:
-      event:
-        - pull_request
-        - push
+  # - name: docker push
+  #   image: docker:dind
+  #   # privileged: true
+  #   volumes:
+  #     - name: dockersock
+  #       path: /var/run
+  #   commands:
+  #     - sleep 5
+  #     - apk update
+  #     - apk add --update nodejs nodejs-npm
+  #     - docker push henrique/$(npm run version --silent)
+  #   when:
+  #     event:
+  #       - pull_request
+  #       - push
 services:
   - name: docker
     image: docker:dind
