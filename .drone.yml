@@ -37,7 +37,7 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: AWS_SECRET_ACCESS_KEY
     commands:
-      - aws eks
+      - eks
   - name: Deploy
     image: bitnami/kubectl:latest
     commands:
