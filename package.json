@@ -1,11 +1,11 @@
 {
   "name": "api-conversao",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "version": "echo $npm_package_name:$npm_package_version",
+    "version": "echo $npm_package_version",
     "start": "node dist/src/index.js"
   },
   "repository": {
