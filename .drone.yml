@@ -1,25 +1,27 @@
 ---
 kind: pipeline
-type: kubernetes
+type: docker
 name: api-conversao
-
+platform:
+  os: linux
+  arсh: amd64
 steps:
-  - name: npm install
-    image: node:14.16.1-alpine3.13
-    commands:
-      - npm install
-    when:
-      event:
-        - pull_request
-        - push
-  - name: npm run build
-    image: node:14.16.1-alpine3.13
-    commands:
-      - npm run build
-    when:
-      event:
-        - pull_request
-        - push
+  # - name: npm install
+  #   image: node:14.16.1-alpine3.13
+  #   commands:
+  #     - npm install
+  #   when:
+  #     event:
+  #       - pull_request
+  #       - push
+  # - name: npm run build
+  #   image: node:14.16.1-alpine3.13
+  #   commands:
+  #     - npm run build
+  #   when:
+  #     event:
+  #       - pull_request
+  #       - push
   - name: docker build
     image: docker:dind
     # privileged: true
@@ -32,7 +34,7 @@ steps:
       DOCKER_PASSWORD:
         from_secret: DOCKER_PASSWORD
     commands:
-      - sleep 6
+      - sleep 5
       - apk update
       - apk add --update nodejs nodejs-npm
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
