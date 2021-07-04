@@ -2,9 +2,7 @@
 kind: pipeline
 type: docker
 name: api-conversao
-platform:
-  os: linux
-  arсh: amd64
+
 steps:
   # - name: npm install
   #   image: node:14.16.1-alpine3.13
@@ -35,8 +33,6 @@ steps:
         from_secret: DOCKER_PASSWORD
     commands:
       - sleep 5
-      - apk update
-      - apk add --update nodejs nodejs-npm
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - docker build -t henrique/$(npm run version --silent) .
     when:
