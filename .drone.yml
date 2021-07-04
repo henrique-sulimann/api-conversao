@@ -21,22 +21,28 @@ steps:
   #       - pull_request
   #       - push
   - name: docker build
-    image: docker:dind
-    # privileged: true
-    volumes:
-      - name: dockersock
-        path: /var/run
-    environment:
-      DOCKER_USER:
+    image: plugins/docker
+    settings:
+      username:
         from_secret: DOCKER_USER
-      DOCKER_PASSWORD:
+      password:
         from_secret: DOCKER_PASSWORD
-    commands:
-      - sleep 5
-      - apk update
-      - apk add --update nodejs nodejs-npm
-      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - docker build -t henrique/$(npm run version --silent) .
+      repo: henrique-sulimann/api-conversao
+    # privileged: true
+    # volumes:
+    #   - name: dockersock
+    #     path: /var/run
+    # environment:
+    #   DOCKER_USER:
+    #     from_secret: DOCKER_USER
+    #   DOCKER_PASSWORD:
+    #     from_secret: DOCKER_PASSWORD
+    # commands:
+    #   - sleep 5
+    #   - apk update
+    #   - apk add --update nodejs nodejs-npm
+    #   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    #   - docker build -t henrique/$(npm run version --silent) .
     # when:
     #   event:
     #     - pull_request
@@ -56,13 +62,13 @@ steps:
   #     event:
   #       - pull_request
   #       - push
-services:
-  - name: docker
-    image: docker:dind
-    privileged: true
-    volumes:
-      - name: dockersock
-        path: /var/run
-volumes:
-  - name: dockersock
-    temp: {}
+# services:
+#   - name: docker
+#     image: docker:dind
+#     privileged: true
+#     volumes:
+#       - name: dockersock
+#         path: /var/run
+# volumes:
+#   - name: dockersock
+#     temp: {}
