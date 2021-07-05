@@ -44,7 +44,14 @@ steps:
       - aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER
 
   - name: Deploy
-    image: bitnami/kubectl:latest
+    image: sinlead/drone-kubectl
+    settings:
+      kubernetes_server:
+        from_secret: KUBERNETES_SERVER
+      kubernetes_cert:
+        from_secret: KUBERNETS_CERT
+      kubernetes_token:
+        from_secret: KUBERNETES_TOKEN
     commands:
       - kubectl config get-contexts
       - kubectl apply -f k8s/api-conversao/
