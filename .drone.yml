@@ -46,4 +46,5 @@ steps:
   - name: Deploy
     image: bitnami/kubectl:latest
     commands:
+      - kubectl config use-context -
       - kubectl apply -f k8s/api-conversao/
