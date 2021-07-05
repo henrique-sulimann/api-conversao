@@ -53,5 +53,4 @@ steps:
       kubernetes_token:
         from_secret: KUBERNETES_TOKEN
     commands:
-      - kubectl config get-contexts
       - kubectl apply -f k8s/api-conversao/
