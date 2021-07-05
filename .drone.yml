@@ -30,15 +30,14 @@ steps:
         from_secret: DOCKER_PASSWORD
       repo: hsulimann/api-conversao
   - name: Get Kubeconfig
-    image: python:3.8-slim-buster
+    image: amazon/aws-cli
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY:
         from_secret: AWS_SECRET_ACCESS_KEY
     commands:
-      - python -m pip install awscli
-      - aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER
+      - aws eks help
 
   - name: Deploy
     image: bitnami/kubectl:latest
